@@ -229,7 +229,8 @@ export default {
         let year = new Date().getFullYear();
         let page = idx;
         let genreId = this.genreId;
-        let query = this.query || "query";
+        let query = this.query;
+
         /*divide 3 functions*/
         if (query.length !== 0) {
           const res = await moviesAPI.searchMovies({ query, page, year });

@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     enterKeyword(query) {
-      console.log(this);
       this.$emit("enter-keyword", query);
     }
   }
