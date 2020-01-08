@@ -209,6 +209,7 @@ export default {
         }));
 
         this.query = res.config.params.query;
+        this.totalPage = res.data.total_pages;
         this.currentPage = 1;
         this.movies = res.data.results;
       } catch (err) {
@@ -228,12 +229,11 @@ export default {
         let year = new Date().getFullYear();
         let page = idx;
         let genreId = this.genreId;
-        let query = this.query;
-
+        let query = this.query || "query";
         /*divide 3 functions*/
         if (query.length !== 0) {
           const res = await moviesAPI.searchMovies({ query, page, year });
-          if (res.status >= 400 || res.data.results.length === 0) {
+          if (res.status >= 400) {
             throw new Error();
           }
 
@@ -330,7 +330,7 @@ export default {
       } catch (err) {
         Toast.fire({
           icon: "error",
-          title: "暫時無法取得資料，請稍後再試"
+          title: "暫時無法取得資料，或無資料，請稍後再試"
         });
       }
     }

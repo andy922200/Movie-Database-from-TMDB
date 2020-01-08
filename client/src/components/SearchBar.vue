@@ -6,6 +6,7 @@
       placeholder="Please enter some keywords."
       v-model="query"
       @change="enterKeyword(query)"
+      required
     />
   </div>
 </template>

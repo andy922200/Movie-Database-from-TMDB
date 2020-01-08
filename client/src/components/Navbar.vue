@@ -21,7 +21,7 @@
           <h5>Sign In</h5>
         </router-link>
 
-        <a target="_blank" href="https://github.com/andy922200/visa-requirements-for-tw-citizens">
+        <a target="_blank" href="https://github.com/andy922200/Movie-Database-from-TMDB">
           <font-awesome-icon :icon="['fab', 'github']" />
         </a>
       </div>
