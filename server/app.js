@@ -1,4 +1,4 @@
-/*const express = require('express')
+const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const methodOverride = require('method-override')
@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const db = require('./models')
+//const db = require('./models')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
@@ -26,17 +26,17 @@ app.use(
     saveUninitialized: true
   })
 )
-*/
+
 // 連結後端 api 路由
 //require('./routes/')(app)
 
 // production mode 前端路由
-//if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   // static folder
-  //app.use(express.static(__dirname + '/public/'))
-  //app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
-//}
+  app.use(express.static(__dirname + '/public/'))
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
+}
 
-//app.listen(port, () => {
-//  console.log(`The app is listening on port ${port}`)
-//})
+app.listen(port, () => {
+  console.log(`The app is listening on port ${port}`)
+})
