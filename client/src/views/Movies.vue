@@ -13,7 +13,6 @@
       <!--add searchBar-->
       <searchBar @enter-keyword="fetchByKeyword" />
       <!--blank-->
-      <br />
       <div class="row justify-content-center">
         <h2>{{thisYear}} Movie Database</h2>
       </div>
