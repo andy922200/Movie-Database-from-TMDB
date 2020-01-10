@@ -27,24 +27,15 @@ export default {
   },
   methods: {
     enterKeyword(query) {
-      if (this.error) {
-        this.errorMessage = "Please check again.";
+      let rule = /^[^\s].{0,}/;
+      if (!rule.test(this.query)) {
+        this.error = true;
+        this.errorMessage = "Please check again. No blank at the first space.";
       } else {
         this.error = false;
         this.errorMessage = "";
         this.$emit("enter-keyword", query);
-      }
-    }
-  },
-  watch: {
-    query: function() {
-      let rule = /^[^\s].{0,}/;
-      if (!rule.test(this.query)) {
-        this.error = true;
-        this.errorMessage = "No blank at the first space.";
-      } else {
-        this.error = false;
-        this.errorMessage = "";
+        this.query = "";
       }
     }
   }

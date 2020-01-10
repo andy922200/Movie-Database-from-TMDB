@@ -132,6 +132,8 @@ export default {
       try {
         let year = new Date().getFullYear();
         let page = 1;
+        /*clean query*/
+        this.query = "";
         /*get movie data by the genre*/
         const res = await moviesAPI.getGenreMovies({ genreId, year, page });
 
@@ -164,6 +166,7 @@ export default {
 
         this.currentPage = 1;
         this.genreId = genreId;
+        this.totalPage = res.data.total_pages;
         this.movies = res.data.results;
       } catch (err) {
         Toast.fire({
@@ -295,6 +298,8 @@ export default {
           this.currentPage = res.data.page;
           this.movies = res.data.results;
         } else {
+          /*clean query*/
+          this.query = "";
           const res = await moviesAPI.getGenreMovies({ genreId, year, page });
 
           if (res.status >= 400 || res.data.results.length === 0) {
