@@ -32,7 +32,8 @@
       </div>
       <br />
       <!--show matched Movie Data -->
-      <moviesData :data="movies" />
+      <Spinner v-if="isLoading" />
+      <moviesData v-else :data="movies" />
     </div>
   </div>
 </template>
@@ -44,6 +45,7 @@ import genreFilter from "./../components/MoviesGenreFilter";
 import moviesData from "./../components/MoviesData";
 import searchBar from "./../components/SearchBar";
 import navBar from "./../components/Navbar";
+import Spinner from "./../components/Spinner";
 
 export default {
   name: "Movies",
@@ -51,7 +53,8 @@ export default {
     genreFilter,
     moviesData,
     searchBar,
-    navBar
+    navBar,
+    Spinner
   },
   data() {
     return {
@@ -62,7 +65,8 @@ export default {
       perPage: 1,
       genreId: -1,
       query: "",
-      thisYear: new Date().getFullYear()
+      thisYear: new Date().getFullYear(),
+      isLoading: true
     };
   },
   created() {
@@ -107,7 +111,9 @@ export default {
         this.totalPage = res.data.total_pages;
         this.currentPage = res.data.page;
         this.movies = res.data.results;
+        this.isLoading = false;
       } catch (err) {
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "暫時無法取得資料，請稍後再試"
@@ -132,8 +138,9 @@ export default {
       try {
         let year = new Date().getFullYear();
         let page = 1;
-        /*clean query*/
+        /*clean query and add Loading*/
         this.query = "";
+        this.isLoading = true;
         /*get movie data by the genre*/
         const res = await moviesAPI.getGenreMovies({ genreId, year, page });
 
@@ -168,7 +175,9 @@ export default {
         this.genreId = genreId;
         this.totalPage = res.data.total_pages;
         this.movies = res.data.results;
+        this.isLoading = false;
       } catch (err) {
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "暫時無法取得資料，請稍後再試"
@@ -179,7 +188,8 @@ export default {
       try {
         let year = new Date().getFullYear();
         let page = 1;
-
+        /*add Loading*/
+        this.isLoading = true;
         /*get movie data by the keyword*/
         const res = await moviesAPI.searchMovies({ query, page, year });
 
@@ -214,7 +224,9 @@ export default {
         this.totalPage = res.data.total_pages;
         this.currentPage = 1;
         this.movies = res.data.results;
+        this.isLoading = false;
       } catch (err) {
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "暫時無法取得資料 or 無資料，請稍後再試"
@@ -232,7 +244,8 @@ export default {
         let page = idx;
         let genreId = this.genreId;
         let query = this.query;
-
+        /*add Loading*/
+        this.isLoading = true;
         /*divide 3 functions*/
         if (query.length !== 0) {
           const res = await moviesAPI.searchMovies({ query, page, year });
@@ -332,7 +345,9 @@ export default {
           this.currentPage = res.data.page;
           this.movies = res.data.results;
         }
+        this.isLoading = false;
       } catch (err) {
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "暫時無法取得資料，或無資料，請稍後再試"
